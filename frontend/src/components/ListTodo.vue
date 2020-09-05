@@ -6,15 +6,17 @@
                 <b-button @click="filterByAuthor" variant="outline-dark">Filter</b-button>                                 
             </b-input-group>
         </b-form> -->
-        <section>
+        <section v-if="whatToDisplay != 'done'">
             <h2>Todo</h2>
-            <draggable v-model="listNotDone">
+            <draggable class="blogCards" v-model="listNotDone" group="tasks"  >
+                
                 <SingleTodo v-for="element in listNotDone" :key="element.id" :message="element"/>
             </draggable>
         </section>
-        <section>
+        <section v-if="whatToDisplay != 'todo'">
             <h2>Done</h2>
-            <draggable v-model="listDone">                
+            <draggable class="blogCards" v-model="listDone" group="tasks" >   
+                        
                 <SingleTodo v-for="element in listDone" :key="element.id" :message="element"/>                
             </draggable>
         </section>
@@ -27,15 +29,8 @@
 
     export default {
         name: 'ListTodo',
-        // props: ['whatToDisplay'],
-        // data: function() {
-        //     return {
-        //         listDone: [],
-        //         listTodo: []
-        //         // author: "",
-        //         // status: ""
-        //     }
-        // },
+        props: ['whatToDisplay'],
+       
         components: {
             SingleTodo,
             draggable      
@@ -45,18 +40,22 @@
                 get: function() {
                     return this.$store.getters.todoDone
                 },
-                set: function(value) {
-                    if (this.whatToDisplay === "all") {
-                        this.$store.dispatch("UPDATEDONE", value)
-                    }
+                set: function(value) {                    
+                    this.$store.dispatch("UPDATEDONE", value)
+                          
                 }                
             },
             listNotDone: {
                 get: function() {
                     return this.$store.getters.todoNotDone
+                },
+                set: function(value) {
+                    this.$store.dispatch("UPDATETODO", value)
+                    
                 }
             }
         },
+        
         // beforeMount() {
         //     this.filterList();
         // },
@@ -79,8 +78,36 @@
 </script> 
 
 <style scoped>
-  div {
-      display: flex;
-  }
-    
+    div {
+        display: flex;
+    }
+    section {
+        width: 50%;
+        margin: 0 auto 0 auto;
+        /* border: 1px solid gainsboro;      */
+    }
+    h2 {
+        font-size: 80px;
+        background: white;
+        opacity: 0.9;
+    }
+    .blogCards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        min-width: 100%;
+        min-height: 50vh;
+    }
+   @media screen and (max-width: 1000px) {
+        div {
+            flex-direction: column;
+        }
+        section {
+            width: 90%;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 30px;
+        }  
+    }    
 </style>

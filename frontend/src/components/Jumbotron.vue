@@ -1,17 +1,21 @@
 <template>
-    <main>
+    <div id="body"> 
         <Header/>
-        <section>
-            
-            <h1 id="titre">Todo List</h1>      
+        <main>
+           
+            <section id="blog">
+                
+                    
 
-            <!-- <Sentence :list="list"/> -->
+                <!-- <Sentence :list="list"/> -->
 
-            <router-view :key="$route.fullPath"/>         
-            
-        </section> 
+                <router-view :key="$route.fullPath"/>         
+                
+            </section> 
+        </main>
+
         <Footer/>       
-    </main>
+    </div>
 </template>
 
 <script>
@@ -31,34 +35,36 @@
 </script> 
 
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
     main {
         background-image: url("../assets/home.jpg");
         background-repeat: no-repeat ;
         background-size: cover;
-        height: 100vh;
+        height: 87vh;
+        overflow-y: scroll;  
     }
-    section {
-        background: whitesmoke;
+    #blog {
+        /* background: whitesmoke; */
         width: 90%;
-        margin: 20px auto 0 auto;
-        padding: 40px;
-        border: 2px solid black;
-        opacity: 0.9;
+        margin: 60px auto 0 auto;
+        /* padding: 40px; */
+        /* border: 2px solid black; */
+        /* opacity: 0.9; */
         height: 80vh;   
-        overflow-y: scroll;     
+           
     }
-    #titre {
-        font-size: 100px;
-        margin-bottom: 30px;
-    } 
+    
     @media screen and (max-width: 1000px) {
-        section {
+        main {
+            height: 78vh;
+        }
+        #blog {
             width: 80%;
             margin: 10px auto 0 auto;
         }
-        #titre {
-            font-size: 40px;
-            margin-bottom: 10px;
-        } 
+       
     }
 </style>
